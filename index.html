@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministério Profético Vida e Paz - Secretaria</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIÁVEIS DE DESIGN SYSTEM --- */
+        :root {
+            --primary: #0F172A; /* Azul Marinho Predominante */
+            --primary-light: #1E293B;
+            --accent: #2563EB; /* Azul de Destaque */
+            --background: #F8FAFC; /* Cinza Claro/Branco */
+            --surface: #FFFFFF; /* Branco Puro para Cards */
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --danger: #EF4444;
+            --radius: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --sidebar-width: 260px;
+        }
+
+        /* --- RESET & BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        button, input, select {
+            border: none;
+            outline: none;
+            font-family: inherit;
+        }
+
+        /* --- LAYOUT ESTRUTURAL --- */
+        .app-container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            grid-template-rows: 70px 1fr;
+            grid-template-areas: 
+                "sidebar header"
+                "sidebar main";
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* --- TOP HEADER --- */
+        header {
+            grid-area: header;
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            z-index: 10;
+        }
+
+        .header-title h1 {
+            font-size: 1.25rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .user-avatar-text {
+            width: 36px;
+            height: 36px;
+            background-color: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .btn-logout:hover {
+            color: var(--danger);
+            background-color: #FEF2F2;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.3rem;
+            background: none;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* --- NAV SIDEBAR --- */
+        sidebar {
+            grid-area: sidebar;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            z-index: 20;
+            transition: var(--transition);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 12px 32px 12px;
+            border-bottom: 1px solid var(--primary-light);
+            margin-bottom: 24px;
+        }
+
+        .brand i {
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            color: #94A3B8;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: white;
+            background-color: var(--accent);
+        }
+
+        .nav-item.active {
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        /* --- PALCO PRINCIPAL (DINÂMICO) --- */
+        main {
+            grid-area: main;
+            padding: 32px;
+            overflow-y: auto;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* --- COMPONENTES REUTILIZÁVEIS --- */
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #1D4ED8;
+            transform: translateY(-1px);
+        }
+
+        /* --- TELA 1: DASHBOARD --- */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .card-metric {
+            background-color: var(--surface);
+            padding: 24px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-info p {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .metric-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .blue { background-color: #EFF6FF; color: var(--accent); }
+        .green { background-color: #ECFDF5; color: var(--success); }
+        .purple { background-color: #F5F3FF; color: #8B5CF6; }
+        .orange { background-color: #FFF7ED; color: #F97316; }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .panel-card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .panel-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Mini Calendário / Lista de Atividades */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .activity-date {
+            background-color: var(--background);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .activity-date .day {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .activity-date .month {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .activity-details h4 {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .activity-details p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- TELA 2: GESTÃO DE MEMBROS --- */
+        .table-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            padding: 10px 16px 10px 40px;
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #F8FAFC;
+            padding: 16px 24px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .member-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .member-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: var(--border);
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-active { background-color: #ECFDF5; color: var(--success); }
+        .badge-inactive { background-color: #F1F5F9; color: var(--text-muted); }
+        .badge-cargo { background-color: #EFF6FF; color: var(--accent); }
+
+        /* --- TELA 3: AGENDA & EVENTOS --- */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .event-card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .event-tag {
+            background-color: #FFF7ED;
+            color: #F97316;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .event-card h3 {
+            font-size: 1.15rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .event-info-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        /* --- TELA 4: MINISTÉRIOS & CÉLULAS --- */
+        .grid-two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        .dept-list, .cells-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .dept-card, .cell-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dept-info h4, .cell-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .dept-info p, .cell-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- MODAL (POPUP FORMULÁRIOS) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-container {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            padding: 32px;
+            box-shadow: var(--shadow-md);
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background-color: var(--background);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-secondary {
+            background-color: var(--background);
+            color: var(--text-main);
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* --- RESPONSIVIDADE (MOBILE-FIRST ADAPTATION) --- */
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "header"
+                    "main";
+            }
+
+            sidebar {
+                position: fixed;
+                left: -260px;
+                top: 0;
+                bottom: 0;
+                width: var(--sidebar-width);
+                height: 100vh;
+            }
+
+            sidebar.open {
+                left: 0;
+            }
+
+            header {
+                padding: 0 20px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .dashboard-content {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 580px) {
+            main {
+                padding: 20px 16px;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .table-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <sidebar id="sidebar">
+            <div class="brand">
+                <i class="fa-solid : fa-church"></i>
+                <div class="brand-name">M. P.<br>Vida e Paz</div>
+            </div>
+            <ul class="nav-list">
+                <li><a class="nav-item active" data-target="view-dashboard"><i class="fa-solid : fa-chart-pie"></i>Dashboard</a></li>
+                <li><a class="nav-item" data-target="view-membros"><i class="fa-solid : fa-users"></i>Membros</a></li>
+                <li><a class="nav-item" data-target="view-agenda"><i class="fa-solid : fa-calendar-days"></i>Agenda & Eventos</a></li>
+                <li><a class="nav-item" data-target="view-ministerios"><i class="fa-solid : fa-sitemap"></i>Ministérios & Células</a></li>
+            </ul>
+        </sidebar>
+
+        <header>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="menu-toggle" id="menuToggleBtn"><i class="fa-solid : fa-bars"></i></button>
+                <div class="header-title">
+                    <h1>Ministério Profético Vida e Paz</h1>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="user-profile">
+                    <div class="user-avatar-text">S</div>
+                    <span style="display: max(none, 480px);">Secretaria</span>
+                </div>
+                <button class="btn-logout" title="Sair do Sistema" onclick="alert('Logout simulado com sucesso!')">
+                    <i class="fa-solid : fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            
+            <section id="view-dashboard" class="view-section active">
+                <div class="section-header">
+                    <h2>Visão Geral</h2>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="card-metric">
+                        <div class="metric-info"><p>Total de Membros</p><h3 id="dash-total-membros">0</h3></div>
+                        <div class="metric-icon blue"><i class="fa-solid : fa-user-check"></i></div>
+                    </div>
+                    <div class="card-metric">
+                        <div class="metric-info"><p>Visitantes do Mês</p><h3>12</h3></div>
+                        <div class="metric-icon green"><i class="fa-solid : fa-user-plus"></i></div>
+                    </div>
+                    <div class="card-metric">
+                        <div class="metric-info"><p>Próximos Eventos</p><h3 id="dash-total-eventos">0</h3></div>
+                        <div class="metric-icon purple"><i class="fa-solid : fa-calendar-check"></i></div>
+                    </div>
+                    <div class="card-metric">
+                        <div class="metric-info"><p>Células Ativas</p><h3 id="dash-total-celulas">0</h3></div>
+                        <div class="metric-icon orange"><i class="fa-solid : fa-house-chimney-user"></i></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="panel-card">
+                        <h3><i class="fa-solid : fa-chart-line" style="color: var(--accent)"></i> Atividades Recentes</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">O sistema está atualizado. Nenhuma inconformidade de cadastro encontrada para a liderança.</p>
+                    </div>
+                    <div class="panel-card">
+                        <h3><i class="fa-solid : fa-calendar-day" style="color: var(--accent)"></i> Próximas Atividades</h3>
+                        <div class="activity-list" id="mini-calendar-container">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-membros" class="view-section">
+                <div class="section-header">
+                    <h2>Gestão de Membros</h2>
+                    <button class="btn-primary" id="btnAbrirModalMembro"><i class="fa-solid : fa-plus"></i> Novo Membro</button>
+                </div>
+
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid : fa-magnifying-glass"></i>
+                        <input type="text" id="inputBuscaMembro" placeholder="Buscar membro por nome...">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome / Perfil</th>
+                                <th>Cargo</th>
+                                <th>Telefone</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-membros-corpo">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="view-agenda" class="view-section">
+                <div class="section-header">
+                    <h2>Agenda & Eventos</h2>
+                    <button class="btn-primary" id="btnAbrirModalEvento"><i class="fa-solid : fa-plus"></i> Novo Evento</button>
+                </div>
+
+                <div class="events-grid" id="grid-eventos-container">
+                    </div>
+            </section>
+
+            <section id="view-ministerios" class="view-section">
+                <div class="section-header">
+                    <h2>Ministérios & Células</h2>
+                </div>
+
+                <div class="grid-two-columns">
+                    <div class="panel-card">
+                        <h3><i class="fa-solid : fa-sitemap" style="color: var(--accent)"></i> Departamentos / Ministérios</h3>
+                        <div class="dept-list" id="lista-departamentos">
+                            </div>
+                    </div>
+
+                    <div class="panel-card">
+                        <h3><i class="fa-solid : fa-house-user" style="color: #F97316;"></i> Células Ativas</h3>
+                        <div class="cells-list" id="lista-celulas">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modalMembro">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Cadastrar Novo Membro</h3>
+                <button class="modal-close" id="btnFecharModalMembro"><i class="fa-solid : fa-xmark"></i></button>
+            </div>
+            <form id="formNovoMembro">
+                <div class="form-group">
+                    <label for="membro-nome">Nome Completo</label>
+                    <input type="text" id="membro-nome" required placeholder="Ex: Miriã Ribeiro">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="membro-nasc">Data de Nascimento</label>
+                        <input type="date" id="membro-nasc" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="membro-tel">Telefone / WhatsApp</label>
+                        <input type="tel" id="membro-tel" required placeholder="(21) 99999-9999">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="membro-end">Endereço Residencial</label>
+                    <input type="text" id="membro-end" required placeholder="Rua, Número, Bairro">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="membro-cargo">Cargo Eclesiástico</label>
+                        <select id="membro-cargo">
+                            <option value="Membro">Membro</option>
+                            <option value="Diácono">Diácono</option>
+                            <option value="Presbítero">Presbítero</option>
+                            <option value="Pastor">Pastor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="membro-batizado">Batizado nas Águas?</label>
+                        <select id="membro-batizado">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="btnCancelarMembro">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Membro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalEvento">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Agendar Novo Evento</h3>
+                <button class="modal-close" id="btnFecharModalEvento"><i class="fa-solid : fa-xmark"></i></button>
+            </div>
+            <form id="formNovoEvento">
+                <div class="form-group">
+                    <label for="evento-nome">Nome do Evento</label>
+                    <input type="text" id="evento-nome" required placeholder="Ex: Culto de Celebração, Vigília">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="evento-data">Data</label>
+                        <input type="date" id="evento-data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="evento-hora">Horário</label>
+                        <input type="time" id="evento-hora" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="evento-local">Local / Templo</label>
+                    <input type="text" id="evento-local" required placeholder="Ex: Templo Principal, Salão Social">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="btnCancelarEvento">Cancelar</button>
+                    <button type="submit" class="btn-primary">Agendar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        /* --- ARRAYS DE DADOS SIMULADOS (ESTADO DA APLICAÇÃO) --- */
+        let membros = [
+            { id: 1, nome: "Ana Souza", cargo: "Membro", telefone: "(21) 98888-7777", status: "Ativo", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150" },
+            { id: 2, nome: "Carlos Eduardo", cargo: "Diácono", telefone: "(21) 97777-6666", status: "Ativo", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150" },
+            { id: 3, nome: "Marcos Paulo", cargo: "Pastor", telefone: "(21) 96666-5555", status: "Ativo", foto: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150" },
+            { id: 4, nome: "Sandra Lima", cargo: "Presbítero", telefone: "(21) 95555-4444", status: "Inativo", foto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150" }
+        ];
+
+        let eventos = [
+            { id: 1, nome: "Culto de Celebração", data: "2026-07-12", hora: "19:00", local: "Sede Principal", diaNum: "12", mesExt: "JUL" },
+            { id: 2, nome: "Reunião Geral de Líderes", data: "2026-07-15", hora: "20:00", local: "Gabinete Pastoral", diaNum: "15", mesExt: "JUL" },
+            { id: 3, nome: "Conferência Profética", data: "2026-08-01", hora: "18:00", local: "Templo Central", diaNum: "01", mesExt: "AGO" }
+        ];
+
+        const ministerios = [
+            { nome: "Ministério de Louvor", lider: "Davi Oliveira", integrantes: 14 },
+            { nome: "Ministério Infantil (Profetizando Herança)", lider: "Sarah Ramos", integrantes: 8 },
+            { nome: "Comunicação & Mídia", lider: "Lucas Reis", integrantes: 6 },
+            { nome: "Corpo de Diaconato", lider: "Carlos Eduardo", integrantes: 22 }
+        ];
+
+        const celulas = [
+            { nome: "Célula Shammah", lider: "Rodrigo & Aline", dia: "Quarta-feira", bairro: "Centro" },
+            { nome: "Célula Betel", lider: "Fernando Costa", dia: "Quinta-feira", bairro: "Cabuçu" },
+            { nome: "Célula Peniel", lider: "Mariana Santos", dia: "Terça-feira", bairro: "Rancho Novo" }
+        ];
+
+        /* --- CONTROLE DE ROTAS/TELAS DINÂMICAS --- */
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.view-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                sections.forEach(s => s.classList.remove('active'));
+
+                item.classList.add('active');
+                const target = item.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+                
+                // Fecha a sidebar em dispositivos móveis após clicar
+                document.getElementById('sidebar').classList.remove('open');
+            });
+        });
+
+        /* --- TOGGLE SIDEBAR MOBILE --- */
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebar');
+        menuToggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        /* --- CONTROLE DOS MODAIS --- */
+        function setupModal(modalId, openBtnId, closeBtnId, cancelBtnId) {
+            const modal = document.getElementById(modalId);
+            const openBtn = document.getElementById(openBtnId);
+            const closeBtn = document.getElementById(closeBtnId);
+            const cancelBtn = document.getElementById(cancelBtnId);
+
+            if(openBtn) openBtn.addEventListener('click', () => modal.classList.add('active'));
+            if(closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+            if(cancelBtn) cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+        }
+
+        setupModal('modalMembro', 'btnAbrirModalMembro', 'btnFecharModalMembro', 'btnCancelarMembro');
+        setupModal('modalEvento', 'btnAbrirModalEvento', 'btnFecharModalEvento', 'btnCancelarEvento');
+
+        /* --- RENDERIZAÇÃO DE DADOS --- */
+
+        // Atualizar Contadores Gerais
+        function atualizarDashboard() {
+            document.getElementById('dash-total-membros').innerText = membros.length;
+            document.getElementById('dash-total-eventos').innerText = eventos.length;
+            document.getElementById('dash-total-celulas').innerText = celulas.length;
+
+            // Preenche mini agenda ordenada por proximidade (pega os 3 primeiros)
+            const miniCalendar = document.getElementById('mini-calendar-container');
+            miniCalendar.innerHTML = '';
+            eventos.slice(0, 3).forEach(ev => {
+                miniCalendar.innerHTML += `
+                    <div class="activity-item">
+                        <div class="activity-date">
+                            <span class="day">${ev.diaNum}</span>
+                            <span class="month">${ev.mesExt}</span>
+                        </div>
+                        <div class="activity-details">
+                            <h4>${ev.nome}</h4>
+                            <p><i class="fa-regular : fa-clock"></i> ${ev.hora} • ${ev.local}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar Lista de Membros
+        function renderMembros(membrosFiltrados = membros) {
+            const corpoTabela = document.getElementById('lista-membros-corpo');
+            corpoTabela.innerHTML = '';
+
+            if (membrosFiltrados.length === 0) {
+                corpoTabela.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Nenhum membro encontrado.</td></tr>`;
+                return;
+            }
+
+            membrosFiltrados.forEach(membro => {
+                corpoTabela.innerHTML += `
+                    <tr>
+                        <td>
+                            <div class="member-profile">
+                                <img src="${membro.foto}" alt="${membro.nome}" class="member-avatar">
+                                <span class="member-name">${membro.nome}</span>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-cargo">${membro.cargo}</span></td>
+                        <td>${membro.telefone}</td>
+                        <td><span class="badge ${membro.status === 'Ativo' ? 'badge-active' : 'badge-inactive'}">${membro.status}</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Renderizar Grid de Eventos
+        function renderEventos() {
+            const grid = document.getElementById('grid-eventos-container');
+            grid.innerHTML = '';
+
+            eventos.forEach(ev => {
+                // Formatação simples de data legível
+                const dataBr = ev.data.split('-').reverse().join('/');
+                grid.innerHTML += `
+                    <div class="event-card">
+                        <div>
+                            <div class="event-header">
+                                <span class="event-tag">Agenda Oficial</span>
+                            </div>
+                            <h3>${ev.nome}</h3>
+                            <div class="event-info-line"><i class="fa-regular : fa-calendar"></i> Data: ${dataBr}</div>
+                            <div class="event-info-line"><i class="fa-regular : fa-clock"></i> Horário: ${ev.hora}h</div>
+                            <div class="event-info-line"><i class="fa-solid : fa-location-dot"></i> Local: ${ev.local}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Renderizar Visões Estáticas (Departamentos e Células)
+        function renderMinisteriosECelulas() {
+            const divDepts = document.getElementById('lista-departamentos');
+            divDepts.innerHTML = '';
+            ministerios.forEach(d => {
+                divDepts.innerHTML += `
+                    <div class="dept-card">
+                        <div class="dept-info">
+                            <h4>${d.nome}</h4>
+                            <p>Líder: <strong>${d.lider}</strong></p>
+                        </div>
+                        <span class="badge badge-inactive">${d.integrantes} integr.</span>
+                    </div>
+                `;
+            });
+
+            const divCells = document.getElementById('lista-celulas');
+            divCells.innerHTML = '';
+            celulas.forEach(c => {
+                divCells.innerHTML += `
+                    <div class="cell-card">
+                        <div class="cell-info">
+                            <h4>${c.nome}</h4>
+                            <p>Líderes: <strong>${c.lider}</strong> • Bairro: ${c.bairro}</p>
+                        </div>
+                        <span class="badge badge-cargo">${c.dia}</span>
+                    </div>
+                `;
+            });
+        }
+
+        /* --- FILTRO DE BUSCA (REAL-TIME) --- */
+        document.getElementById('inputBuscaMembro').addEventListener('input', (e) => {
+            const termo = e.target.value.toLowerCase();
+            const filtrados = membros.filter(m => m.nome.toLowerCase().includes(termo));
+            renderMembros(filtrados);
+        });
+
+        /* --- EVENTOS SUBMIT DOS FORMULÁRIOS --- */
+        
+        // Novo Membro
+        document.getElementById('formNovoMembro').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nome = document.getElementById('membro-nome').value;
+            const telefone = document.getElementById('membro-tel').value;
+            const cargo = document.getElementById('membro-cargo').value;
+            
+            const novo = {
+                id: membros.length + 1,
+                nome: nome,
+                cargo: cargo,
+                telefone: telefone,
+                status: "Ativo",
+                // Avatar aleatório padrão do Unsplash para visual bonito
+                foto: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000)}?w=150`
+            };
+
+            membros.push(novo);
+            renderMembros();
+            atualizarDashboard();
+            
+            // Reset e Fechamento
+            document.getElementById('formNovoMembro').reset();
+            document.getElementById('modalMembro').classList.remove('active');
+        });
+
+        // Novo Evento
+        document.getElementById('formNovoEvento').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nome = document.getElementById('evento-nome').value;
+            const data = document.getElementById('evento-data').value;
+            const hora = document.getElementById('evento-hora').value;
+            const local = document.getElementById('evento-local').value;
+
+            // Extração fictícia para compor a estilização de datas do mini-calendário
+            const partesData = data.split('-');
+            const diaNum = partesData[2] || "00";
+            const meses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+            const mesExt = meses[parseInt(partesData[1]) - 1] || "UTI";
+
+            const novo = {
+                id: eventos.length + 1,
+                nome: nome,
+                data: data,
+                hora: hora,
+                local: local,
+                diaNum: diaNum,
+                mesExt: mesExt
+            };
+
+            eventos.unshift(novo); // Insere no topo
+            renderEventos();
+            atualizarDashboard();
+
+            // Reset e Fechamento
+            document.getElementById('formNovoEvento').reset();
+            document.getElementById('modalEvento').classList.remove('active');
+        });
+
+        /* --- INICIALIZAÇÃO DA APLICAÇÃO --- */
+        window.addEventListener('DOMContentLoaded', () => {
+            atualizarDashboard();
+            renderMembros();
+            renderEventos();
+            renderMinisteriosECelulas();
+        });
+    </script>
+</body>
+</html>
